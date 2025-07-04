@@ -8,6 +8,7 @@ import Badge from '@/components/atoms/Badge'
 import Loading from '@/components/ui/Loading'
 import Error from '@/components/ui/Error'
 import ApperIcon from '@/components/ApperIcon'
+import PerformanceChart from '@/components/organisms/PerformanceChart'
 import { studentService } from '@/services/api/studentService'
 import { gradeService } from '@/services/api/gradeService'
 import { attendanceService } from '@/services/api/attendanceService'
@@ -241,8 +242,11 @@ const StudentDetail = () => {
           <div className="text-sm text-slate-500">
             {attendanceStats.late} late arrivals
           </div>
-        </Card>
+</Card>
       </div>
+      
+      {/* Performance Chart */}
+      <PerformanceChart grades={grades} loading={loading} />
       
       {/* Grades and Attendance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

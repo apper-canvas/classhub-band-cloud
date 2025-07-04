@@ -67,6 +67,44 @@ class GradeService {
       grade.Id > max ? grade.Id : max, 0
     )
     return maxId + 1
+}
+  
+  async getPerformanceData(studentId) {
+    await this.delay(200)
+    
+    const studentGrades = this.grades.filter(g => g.studentId === studentId.toString())
+    
+    if (studentGrades.length === 0) {
+      return { trends: [], averages: {}, totalAssignments: 0 }
+    }
+    
+    // Sort by date
+    const sortedGrades = studentGrades.sort((a, b) => new Date(a.date) - new Date(b.date))
+    
+    // Calculate performance trends
+    const trends = sortedGrades.map(grade => ({
+      date: grade.date,
+      percentage: (grade.score / grade.maxScore) * 100,
+      assignmentName: grade.assignmentName,
+      category: grade.category
+    }))
+    
+    // Calculate averages by category
+    const averages = sortedGrades.reduce((acc, grade) => {
+      if (!acc[grade.category]) {
+        acc[grade.category] = { total: 0, count: 0, average: 0 }
+      }
+      acc[grade.category].total += (grade.score / grade.maxScore) * 100
+      acc[grade.category].count += 1
+      acc[grade.category].average = acc[grade.category].total / acc[grade.category].count
+      return acc
+    }, {})
+    
+    return {
+      trends: [...trends],
+      averages: { ...averages },
+      totalAssignments: studentGrades.length
+    }
   }
   
   delay(ms) {
