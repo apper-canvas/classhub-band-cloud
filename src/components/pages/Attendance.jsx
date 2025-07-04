@@ -1,19 +1,24 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { format } from 'date-fns'
-import AttendanceGrid from '@/components/organisms/AttendanceGrid'
-import Loading from '@/components/ui/Loading'
-import Error from '@/components/ui/Error'
-import Empty from '@/components/ui/Empty'
-import { attendanceService } from '@/services/api/attendanceService'
-import { studentService } from '@/services/api/studentService'
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { format } from "date-fns";
+import ExportDialog from "@/components/organisms/ExportDialog";
+import { exportService } from "@/services/api/exportService";
+import AttendanceGrid from "@/components/organisms/AttendanceGrid";
+import Button from "@/components/atoms/Button";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import { attendanceService } from "@/services/api/attendanceService";
+import { studentService } from "@/services/api/studentService";
 
 const Attendance = () => {
   const [students, setStudents] = useState([])
   const [attendance, setAttendance] = useState([])
-  const [loading, setLoading] = useState(true)
+const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date())
+  const [showExportDialog, setShowExportDialog] = useState(false)
+  const [exportLoading, setExportLoading] = useState(false)
   
   const loadData = async () => {
     try {
@@ -122,9 +127,22 @@ const Attendance = () => {
         return updated
       })
       
-      toast.success('Bulk attendance updated successfully')
+toast.success('Bulk attendance updated successfully')
     } catch (err) {
       toast.error('Failed to update bulk attendance')
+    }
+  }
+  
+  const handleExport = async (format) => {
+    try {
+      setExportLoading(true)
+      await exportService.generateAttendanceReport(attendance, students, format)
+      toast.success(`Attendance report exported successfully as ${format.toUpperCase()}`)
+      setShowExportDialog(false)
+    } catch (error) {
+      toast.error('Failed to export attendance report')
+    } finally {
+      setExportLoading(false)
     }
   }
   
@@ -135,7 +153,6 @@ const Attendance = () => {
   if (error) {
     return <Error message={error} onRetry={loadData} />
   }
-  
   if (students.length === 0) {
     return (
       <Empty
@@ -149,27 +166,44 @@ const Attendance = () => {
   }
   
   return (
-    <div className="space-y-6">
+<div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold gradient-text">Attendance</h1>
-        <p className="text-slate-600 mt-1">
-          Track daily student attendance and monitor patterns
-        </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold gradient-text">Attendance</h1>
+          <p className="text-slate-600 mt-1">
+            Track daily student attendance and monitor patterns
+          </p>
+        </div>
+        
+        <Button
+          variant="outline"
+          onClick={() => setShowExportDialog(true)}
+          icon="Download"
+          className="md:w-auto"
+        >
+          Export
+        </Button>
       </div>
-      
       {/* Attendance Grid */}
       <AttendanceGrid
         students={students}
         attendance={attendance}
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
-        onStatusChange={handleStatusChange}
+onStatusChange={handleStatusChange}
         onBulkUpdate={handleBulkUpdate}
         loading={loading}
+      />
+      
+      {/* Export Dialog */}
+      <ExportDialog
+        isOpen={showExportDialog}
+        onClose={() => setShowExportDialog(false)}
+        onExport={handleExport}
+        dataType="Attendance"
+        loading={exportLoading}
       />
     </div>
   )
 }
-
-export default Attendance

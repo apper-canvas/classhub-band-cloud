@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { motion } from 'framer-motion'
-import { format } from 'date-fns'
-import Button from '@/components/atoms/Button'
-import Card from '@/components/atoms/Card'
-import Badge from '@/components/atoms/Badge'
-import SearchBar from '@/components/molecules/SearchBar'
-import GradeForm from '@/components/organisms/GradeForm'
-import Loading from '@/components/ui/Loading'
-import Error from '@/components/ui/Error'
-import Empty from '@/components/ui/Empty'
-import ApperIcon from '@/components/ApperIcon'
-import { gradeService } from '@/services/api/gradeService'
-import { studentService } from '@/services/api/studentService'
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import ExportDialog from "@/components/organisms/ExportDialog";
+import { exportService } from "@/services/api/exportService";
+import ApperIcon from "@/components/ApperIcon";
+import GradeForm from "@/components/organisms/GradeForm";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import SearchBar from "@/components/molecules/SearchBar";
+import { gradeService } from "@/services/api/gradeService";
+import { studentService } from "@/services/api/studentService";
 
 const Grades = () => {
   const [grades, setGrades] = useState([])
@@ -22,9 +24,11 @@ const Grades = () => {
   const [error, setError] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [editingGrade, setEditingGrade] = useState(null)
-  const [searchTerm, setSearchTerm] = useState('')
+const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [formLoading, setFormLoading] = useState(false)
+  const [showExportDialog, setShowExportDialog] = useState(false)
+  const [exportLoading, setExportLoading] = useState(false)
   
   const loadData = async () => {
     try {
@@ -115,9 +119,22 @@ const Grades = () => {
     }
   }
   
-  const handleFormCancel = () => {
+const handleFormCancel = () => {
     setShowForm(false)
     setEditingGrade(null)
+  }
+  
+  const handleExport = async (format) => {
+    try {
+      setExportLoading(true)
+      await exportService.generateGradeReport(filteredGrades, students, format)
+      toast.success(`Grade report exported successfully as ${format.toUpperCase()}`)
+      setShowExportDialog(false)
+    } catch (error) {
+      toast.error('Failed to export grade report')
+    } finally {
+      setExportLoading(false)
+    }
   }
   
   const getGradeColor = (percentage) => {
@@ -127,13 +144,13 @@ const Grades = () => {
     return 'needs-improvement'
   }
   
-  const getStudentName = (studentId) => {
+const getStudentName = (studentId) => {
     const student = students.find(s => s.Id === parseInt(studentId))
     return student?.name || 'Unknown Student'
   }
-  
-  const categories = [...new Set(grades.map(grade => grade.category))].filter(Boolean)
-  
+
+  // Define available categories for filtering
+  const categories = ['homework', 'quiz', 'test', 'project', 'participation', 'final']
   if (loading) {
     return <Loading type="table" />
   }
@@ -163,17 +180,26 @@ const Grades = () => {
           <p className="text-slate-600 mt-1">
             Track student performance and assignments • {grades.length} total grades
           </p>
-        </div>
+</div>
         
-        <Button
-          onClick={handleAddGrade}
-          icon="Plus"
-          className="md:w-auto"
-        >
-          Add Grade
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            variant="outline"
+            onClick={() => setShowExportDialog(true)}
+            icon="Download"
+            className="sm:w-auto"
+          >
+            Export
+          </Button>
+          <Button
+            onClick={handleAddGrade}
+            icon="Plus"
+            className="sm:w-auto"
+          >
+            Add Grade
+          </Button>
+        </div>
       </div>
-      
       {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <SearchBar
@@ -328,10 +354,19 @@ const Grades = () => {
               clear filters
             </button>
           </p>
-        </div>
+</div>
       )}
+      
+      {/* Export Dialog */}
+      <ExportDialog
+        isOpen={showExportDialog}
+        onClose={() => setShowExportDialog(false)}
+        onExport={handleExport}
+        dataType="Grades"
+        loading={exportLoading}
+      />
     </div>
-  )
+)
 }
 
 export default Grades
