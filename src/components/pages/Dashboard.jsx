@@ -9,6 +9,7 @@ import Badge from '@/components/atoms/Badge'
 import Loading from '@/components/ui/Loading'
 import Error from '@/components/ui/Error'
 import ApperIcon from '@/components/ApperIcon'
+import AssignmentCalendar from '@/components/organisms/AssignmentCalendar'
 import { studentService } from '@/services/api/studentService'
 import { gradeService } from '@/services/api/gradeService'
 import { attendanceService } from '@/services/api/attendanceService'
@@ -86,6 +87,16 @@ const Dashboard = () => {
       })
     
     return recentGrades
+}
+  
+  const getUpcomingAssignments = () => {
+    return grades.map(grade => ({
+      Id: grade.Id,
+      name: grade.assignmentName,
+      dueDate: grade.date,
+      category: grade.category,
+      studentName: students.find(s => s.Id === parseInt(grade.studentId))?.name || 'Unknown'
+    }))
   }
   
   const getTodayAttendance = () => {
@@ -103,9 +114,10 @@ const Dashboard = () => {
     return <Error message={error} onRetry={loadDashboardData} />
   }
   
-  const stats = getDashboardStats()
+const stats = getDashboardStats()
   const recentActivity = getRecentActivity()
   const todayAttendance = getTodayAttendance()
+  const upcomingAssignments = getUpcomingAssignments()
   
   return (
     <div className="space-y-8">
@@ -285,8 +297,21 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-        </Card>
+</Card>
       </div>
+      
+      {/* Assignment Calendar */}
+      <Card className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-slate-800">Assignment Calendar</h2>
+          <Link to="/grades">
+            <Button variant="ghost" size="small" icon="Calendar">
+              View All Grades
+            </Button>
+          </Link>
+        </div>
+        <AssignmentCalendar assignments={upcomingAssignments} />
+      </Card>
     </div>
   )
 }
