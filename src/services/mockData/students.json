@@ -150,8 +150,9 @@
     "email": "olivia.anderson@student.edu",
     "phone": "(555) 345-6789",
     "enrollmentDate": "2023-08-15T00:00:00.000Z",
-    "status": "active",
+"status": "active",
     "parentName": "Susan Anderson",
     "parentEmail": "susan.anderson@email.com",
     "parentPhone": "(555) 345-6700"
   }
+]
