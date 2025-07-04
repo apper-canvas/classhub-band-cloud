@@ -110,10 +110,11 @@ const params = {
     try {
       const client = this.getApperClient()
       
-      // Map UI fields to database fields (only Updateable fields)
+// Map UI fields to database fields (only Updateable fields)
       const params = {
         records: [{
           student_id: parseInt(gradeData.studentId),
+          student_name: gradeData.studentName,
           assignment_name: gradeData.assignmentName,
           category: gradeData.category,
           score: gradeData.score,
@@ -169,11 +170,12 @@ if (successfulRecords.length > 0) {
     try {
       const client = this.getApperClient()
       
-      // Map UI fields to database fields (only Updateable fields)
+// Map UI fields to database fields (only Updateable fields)
       const params = {
         records: [{
           Id: id,
           student_id: parseInt(gradeData.studentId),
+          student_name: gradeData.studentName,
           assignment_name: gradeData.assignmentName,
           category: gradeData.category,
           score: gradeData.score,

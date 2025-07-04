@@ -79,7 +79,7 @@ const GradeForm = ({
     return newErrors
   }
   
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault()
     
     const validationErrors = validate()
@@ -88,8 +88,13 @@ const GradeForm = ({
       return
     }
     
+    // Find the selected student to get their name
+    const selectedStudent = students.find(student => student.Id.toString() === formData.studentId)
+    const studentName = selectedStudent ? selectedStudent.name : ''
+    
     const submissionData = {
       ...formData,
+      studentName: studentName,
       score: parseFloat(formData.score),
       maxScore: parseFloat(formData.maxScore),
       date: new Date(formData.date)
