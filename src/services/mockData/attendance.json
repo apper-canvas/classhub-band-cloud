@@ -1,0 +1,170 @@
+[
+  {
+    "Id": 1,
+    "studentId": "1",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 2,
+    "studentId": "2",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 3,
+    "studentId": "3",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "late",
+    "reason": "Traffic delay"
+  },
+  {
+    "Id": 4,
+    "studentId": "4",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 5,
+    "studentId": "5",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 6,
+    "studentId": "6",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "absent",
+    "reason": "Sick"
+  },
+  {
+    "Id": 7,
+    "studentId": "7",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 8,
+    "studentId": "8",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 9,
+    "studentId": "9",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 10,
+    "studentId": "10",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 11,
+    "studentId": "11",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "excused",
+    "reason": "Doctor appointment"
+  },
+  {
+    "Id": 12,
+    "studentId": "12",
+    "date": "2024-01-15T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 13,
+    "studentId": "1",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 14,
+    "studentId": "2",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 15,
+    "studentId": "3",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 16,
+    "studentId": "4",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "late",
+    "reason": "Bus delay"
+  },
+  {
+    "Id": 17,
+    "studentId": "5",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 18,
+    "studentId": "6",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "absent",
+    "reason": "Family emergency"
+  },
+  {
+    "Id": 19,
+    "studentId": "7",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 20,
+    "studentId": "8",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 21,
+    "studentId": "9",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 22,
+    "studentId": "10",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 23,
+    "studentId": "11",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  },
+  {
+    "Id": 24,
+    "studentId": "12",
+    "date": "2024-01-16T00:00:00.000Z",
+    "status": "present",
+    "reason": ""
+  }
+]

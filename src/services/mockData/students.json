@@ -1,0 +1,110 @@
+[
+  {
+    "Id": 1,
+    "name": "Emma Johnson",
+    "gradeLevel": "5th Grade",
+    "email": "emma.johnson@email.com",
+    "phone": "(555) 123-4567",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 2,
+    "name": "Liam Smith",
+    "gradeLevel": "5th Grade",
+    "email": "liam.smith@email.com",
+    "phone": "(555) 234-5678",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 3,
+    "name": "Olivia Davis",
+    "gradeLevel": "4th Grade",
+    "email": "olivia.davis@email.com",
+    "phone": "(555) 345-6789",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 4,
+    "name": "Noah Wilson",
+    "gradeLevel": "4th Grade",
+    "email": "noah.wilson@email.com",
+    "phone": "(555) 456-7890",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 5,
+    "name": "Sophia Brown",
+    "gradeLevel": "3rd Grade",
+    "email": "sophia.brown@email.com",
+    "phone": "(555) 567-8901",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 6,
+    "name": "Mason Miller",
+    "gradeLevel": "3rd Grade",
+    "email": "mason.miller@email.com",
+    "phone": "(555) 678-9012",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 7,
+    "name": "Isabella Garcia",
+    "gradeLevel": "6th Grade",
+    "email": "isabella.garcia@email.com",
+    "phone": "(555) 789-0123",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 8,
+    "name": "Ethan Rodriguez",
+    "gradeLevel": "6th Grade",
+    "email": "ethan.rodriguez@email.com",
+    "phone": "(555) 890-1234",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 9,
+    "name": "Ava Martinez",
+    "gradeLevel": "2nd Grade",
+    "email": "ava.martinez@email.com",
+    "phone": "(555) 901-2345",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 10,
+    "name": "William Anderson",
+    "gradeLevel": "2nd Grade",
+    "email": "william.anderson@email.com",
+    "phone": "(555) 012-3456",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 11,
+    "name": "Mia Thompson",
+    "gradeLevel": "1st Grade",
+    "email": "mia.thompson@email.com",
+    "phone": "(555) 123-4567",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "Id": 12,
+    "name": "James White",
+    "gradeLevel": "1st Grade",
+    "email": "james.white@email.com",
+    "phone": "(555) 234-5678",
+    "enrollmentDate": "2024-08-15T00:00:00.000Z",
+    "status": "active"
+  }
+]
