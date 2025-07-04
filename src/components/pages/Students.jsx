@@ -74,9 +74,12 @@ const Students = () => {
     }
   }
   
-  const handleFormSubmit = async (formData) => {
+const handleFormSubmit = async (formData) => {
     try {
       setFormLoading(true)
+      
+      // Log form data for debugging
+      console.log('Form data being submitted:', formData)
       
       if (editingStudent) {
         const updatedStudent = await studentService.update(editingStudent.Id, formData)
@@ -91,6 +94,7 @@ const Students = () => {
       setShowForm(false)
       setEditingStudent(null)
     } catch (err) {
+      console.error('Form submission error:', err)
       toast.error(err.message || 'Failed to save student')
     } finally {
       setFormLoading(false)

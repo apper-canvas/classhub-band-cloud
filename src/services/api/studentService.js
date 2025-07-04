@@ -176,9 +176,13 @@ class StudentService {
     }
   }
   
-  async update(id, studentData) {
+async update(id, studentData) {
     try {
       const client = this.getApperClient()
+      
+      // Log data for debugging
+      console.log('Updating student with ID:', id)
+      console.log('Student data received:', studentData)
       
       // Map UI fields to database fields (only Updateable fields)
       const params = {
@@ -188,7 +192,7 @@ class StudentService {
           grade_level: studentData.gradeLevel,
           email: studentData.email,
           phone: studentData.phone,
-          enrollment_date: studentData.enrollmentDate,
+          // Don't update enrollment_date on updates, keep existing value
           status: studentData.status,
           parent_name: studentData.parentName || '',
           parent_email: studentData.parentEmail || '',
@@ -207,8 +211,21 @@ class StudentService {
         const successfulUpdates = response.results.filter(result => result.success)
         const failedUpdates = response.results.filter(result => !result.success)
         
-        if (failedUpdates.length > 0) {
-          console.error(`Failed to update ${failedUpdates.length} records:${failedUpdates}`)
+if (failedUpdates.length > 0) {
+          console.error(`Failed to update ${failedUpdates.length} records:${JSON.stringify(failedUpdates)}`)
+          
+          // Log detailed error information for debugging
+          failedUpdates.forEach(record => {
+            if (record.errors) {
+              record.errors.forEach(error => {
+                console.error(`Field error - ${error.fieldLabel}: ${error.message}`)
+              })
+            }
+            if (record.message) {
+              console.error('Update error message:', record.message)
+            }
+          })
+          
           throw new Error('Failed to update student')
         }
         
@@ -231,11 +248,12 @@ class StudentService {
       }
       
       throw new Error('No student updated')
-    } catch (error) {
+} catch (error) {
+      console.error("Error updating student:", error)
       if (error?.response?.data?.message) {
-        console.error("Error updating student:", error?.response?.data?.message)
+        console.error("API error message:", error?.response?.data?.message)
       } else {
-        console.error(error.message)
+        console.error("Service error message:", error.message)
       }
       throw error
     }

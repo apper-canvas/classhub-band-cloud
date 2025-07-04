@@ -10,24 +10,30 @@ const StudentForm = ({
   onCancel, 
   loading = false 
 }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name: '',
     gradeLevel: '',
     email: '',
     phone: '',
-    status: 'active'
+    status: 'active',
+    parentName: '',
+    parentEmail: '',
+    parentPhone: ''
   })
   
   const [errors, setErrors] = useState({})
   
-  useEffect(() => {
+useEffect(() => {
     if (student) {
       setFormData({
         name: student.name || '',
         gradeLevel: student.gradeLevel || '',
         email: student.email || '',
         phone: student.phone || '',
-        status: student.status || 'active'
+        status: student.status || 'active',
+        parentName: student.parentName || '',
+        parentEmail: student.parentEmail || '',
+        parentPhone: student.parentPhone || ''
       })
     }
   }, [student])
@@ -172,10 +178,10 @@ required
               <h3 className="text-lg font-semibold text-slate-800 mb-4">Parent Information</h3>
             </div>
             
-            <FormField
+<FormField
               label="Parent Name"
               name="parentName"
-              value={formData.parentName}
+              value={formData.parentName || ''}
               onChange={handleChange}
               placeholder="Enter parent's full name"
             />
@@ -184,7 +190,7 @@ required
               type="email"
               label="Parent Email"
               name="parentEmail"
-              value={formData.parentEmail}
+              value={formData.parentEmail || ''}
               onChange={handleChange}
               placeholder="parent@example.com"
             />
@@ -193,7 +199,7 @@ required
               type="tel"
               label="Parent Phone"
               name="parentPhone"
-              value={formData.parentPhone}
+              value={formData.parentPhone || ''}
               onChange={handleChange}
               placeholder="(555) 123-4567"
             />
