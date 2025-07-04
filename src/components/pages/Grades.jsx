@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-import ExportDialog from "@/components/organisms/ExportDialog";
-import { exportService } from "@/services/api/exportService";
 import ApperIcon from "@/components/ApperIcon";
+import ExportDialog from "@/components/organisms/ExportDialog";
 import GradeForm from "@/components/organisms/GradeForm";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
@@ -13,6 +12,7 @@ import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
 import SearchBar from "@/components/molecules/SearchBar";
+import { exportService } from "@/services/api/exportService";
 import { gradeService } from "@/services/api/gradeService";
 import { studentService } from "@/services/api/studentService";
 
@@ -26,6 +26,9 @@ const Grades = () => {
   const [editingGrade, setEditingGrade] = useState(null)
 const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [assignmentNameFilter, setAssignmentNameFilter] = useState('')
+  const [minScore, setMinScore] = useState('')
+  const [maxScore, setMaxScore] = useState('')
   const [formLoading, setFormLoading] = useState(false)
   const [showExportDialog, setShowExportDialog] = useState(false)
   const [exportLoading, setExportLoading] = useState(false)
@@ -54,7 +57,7 @@ const [searchTerm, setSearchTerm] = useState('')
     loadData()
   }, [])
   
-  useEffect(() => {
+useEffect(() => {
     let filtered = grades
     
     if (searchTerm) {
@@ -71,8 +74,23 @@ const [searchTerm, setSearchTerm] = useState('')
       filtered = filtered.filter(grade => grade.category === selectedCategory)
     }
     
+    if (assignmentNameFilter) {
+      filtered = filtered.filter(grade => 
+        grade.assignmentName.toLowerCase().includes(assignmentNameFilter.toLowerCase())
+      )
+    }
+    
+    if (minScore !== '' || maxScore !== '') {
+      filtered = filtered.filter(grade => {
+        const percentage = (grade.score / grade.maxScore) * 100
+        const min = minScore !== '' ? parseFloat(minScore) : 0
+        const max = maxScore !== '' ? parseFloat(maxScore) : 100
+        return percentage >= min && percentage <= max
+      })
+    }
+    
     setFilteredGrades(filtered)
-  }, [searchTerm, selectedCategory, grades, students])
+  }, [searchTerm, selectedCategory, assignmentNameFilter, minScore, maxScore, grades, students])
   
   const handleAddGrade = () => {
     setEditingGrade(null)
@@ -200,12 +218,11 @@ const getStudentName = (studentId) => {
           </Button>
         </div>
       </div>
-      {/* Search and Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+{/* Search and Filters */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <SearchBar
-          placeholder="Search by assignment or student name..."
+          placeholder="Search by student name..."
           onSearch={setSearchTerm}
-          className="md:col-span-2"
         />
         
         <select
@@ -220,6 +237,35 @@ const getStudentName = (studentId) => {
             </option>
           ))}
         </select>
+        
+        <input
+          type="text"
+          placeholder="Filter by assignment name..."
+          value={assignmentNameFilter}
+          onChange={(e) => setAssignmentNameFilter(e.target.value)}
+          className="input-premium"
+        />
+        
+        <div className="flex gap-2">
+          <input
+            type="number"
+            placeholder="Min %"
+            value={minScore}
+            onChange={(e) => setMinScore(e.target.value)}
+            className="input-premium"
+            min="0"
+            max="100"
+          />
+          <input
+            type="number"
+            placeholder="Max %"
+            value={maxScore}
+            onChange={(e) => setMaxScore(e.target.value)}
+            className="input-premium"
+            min="0"
+            max="100"
+          />
+        </div>
       </div>
       
       {/* Stats Cards */}
@@ -339,7 +385,7 @@ const getStudentName = (studentId) => {
           onAction={handleAddGrade}
         />
       ) : (
-        <div className="text-center py-12">
+<div className="text-center py-12">
           <ApperIcon name="Search" className="w-12 h-12 mx-auto mb-4 text-slate-300" />
           <h3 className="text-lg font-medium text-slate-600 mb-2">No grades found</h3>
           <p className="text-slate-500">
@@ -348,13 +394,16 @@ const getStudentName = (studentId) => {
               onClick={() => {
                 setSearchTerm('')
                 setSelectedCategory('')
+                setAssignmentNameFilter('')
+                setMinScore('')
+                setMaxScore('')
               }}
               className="text-primary hover:underline"
             >
               clear filters
             </button>
           </p>
-</div>
+        </div>
       )}
       
       {/* Export Dialog */}
