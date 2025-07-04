@@ -124,8 +124,7 @@ const StudentDetail = () => {
           {student.status}
         </Badge>
       </div>
-      
-      {/* Student Info */}
+{/* Student Info */}
       <Card className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
@@ -170,6 +169,48 @@ const StudentDetail = () => {
         </div>
       </Card>
       
+      {/* Parent Contact */}
+      <Card className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-slate-800">Parent Contact</h2>
+          <ApperIcon name="Users" className="w-6 h-6 text-primary" />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Parent Name</label>
+            <p className="text-slate-900">{student.parentName || 'Not specified'}</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+            {student.parentEmail ? (
+              <a 
+                href={`mailto:${student.parentEmail}`}
+                className="text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors duration-200 flex items-center gap-1"
+              >
+                <ApperIcon name="Mail" className="w-4 h-4" />
+                {student.parentEmail}
+              </a>
+            ) : (
+              <p className="text-slate-500">Not specified</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+            {student.parentPhone ? (
+              <a 
+                href={`tel:${student.parentPhone}`}
+                className="text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors duration-200 flex items-center gap-1"
+              >
+                <ApperIcon name="Phone" className="w-4 h-4" />
+                {student.parentPhone}
+              </a>
+            ) : (
+              <p className="text-slate-500">Not specified</p>
+            )}
+          </div>
+        </div>
+      </Card>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="p-6 text-center">
