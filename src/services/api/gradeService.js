@@ -18,9 +18,12 @@ class GradeService {
   async getAll() {
     try {
       const client = this.getApperClient()
-      const params = {
+const params = {
         fields: [
-          { field: { Name: "student_id" } },
+          { 
+            field: { Name: "student_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
           { field: { Name: "assignment_name" } },
           { field: { Name: "category" } },
           { field: { Name: "score" } },
@@ -36,17 +39,17 @@ class GradeService {
         return []
       }
       
-      // Map database fields to UI format
+// Map database fields to UI format
       const grades = response.data.map(grade => ({
         Id: grade.Id,
-        studentId: grade.student_id?.toString(),
+        studentId: grade.student_id?.Id?.toString() || grade.student_id?.toString(),
+        studentName: grade.student_id?.Name || 'Unknown Student',
         assignmentName: grade.assignment_name,
         category: grade.category,
         score: grade.score,
         maxScore: grade.max_score,
         date: grade.date
       }))
-      
       return grades
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -61,9 +64,12 @@ class GradeService {
   async getById(id) {
     try {
       const client = this.getApperClient()
-      const params = {
+const params = {
         fields: [
-          { field: { Name: "student_id" } },
+          { 
+            field: { Name: "student_id" },
+            referenceField: { field: { Name: "Name" } }
+          },
           { field: { Name: "assignment_name" } },
           { field: { Name: "category" } },
           { field: { Name: "score" } },
@@ -78,17 +84,17 @@ class GradeService {
         return null
       }
       
-      // Map database fields to UI format
+// Map database fields to UI format
       const grade = {
         Id: response.data.Id,
-        studentId: response.data.student_id?.toString(),
+        studentId: response.data.student_id?.Id?.toString() || response.data.student_id?.toString(),
+        studentName: response.data.student_id?.Name || 'Unknown Student',
         assignmentName: response.data.assignment_name,
         category: response.data.category,
         score: response.data.score,
         maxScore: response.data.max_score,
         date: response.data.date
       }
-      
       return grade
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -132,12 +138,13 @@ class GradeService {
           throw new Error('Failed to create grade')
         }
         
-        if (successfulRecords.length > 0) {
+if (successfulRecords.length > 0) {
           const createdGrade = successfulRecords[0].data
           // Map back to UI format
           return {
             Id: createdGrade.Id,
-            studentId: createdGrade.student_id?.toString(),
+            studentId: createdGrade.student_id?.Id?.toString() || createdGrade.student_id?.toString(),
+            studentName: createdGrade.student_id?.Name || 'Unknown Student',
             assignmentName: createdGrade.assignment_name,
             category: createdGrade.category,
             score: createdGrade.score,
@@ -191,12 +198,13 @@ class GradeService {
           throw new Error('Failed to update grade')
         }
         
-        if (successfulUpdates.length > 0) {
+if (successfulUpdates.length > 0) {
           const updatedGrade = successfulUpdates[0].data
           // Map back to UI format
           return {
             Id: updatedGrade.Id,
-            studentId: updatedGrade.student_id?.toString(),
+            studentId: updatedGrade.student_id?.Id?.toString() || updatedGrade.student_id?.toString(),
+            studentName: updatedGrade.student_id?.Name || 'Unknown Student',
             assignmentName: updatedGrade.assignment_name,
             category: updatedGrade.category,
             score: updatedGrade.score,
