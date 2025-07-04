@@ -218,52 +218,97 @@ const getStudentName = (studentId) => {
           </Button>
         </div>
       </div>
-{/* Search and Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <SearchBar
-          placeholder="Search by student name..."
-          onSearch={setSearchTerm}
-        />
+{/* Filter Grades Section */}
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-slate-900">Filter Grades</h2>
+          <Button
+            variant="ghost"
+            size="small"
+            onClick={() => {
+              setSearchTerm('')
+              setSelectedCategory('')
+              setAssignmentNameFilter('')
+              setMinScore('')
+              setMaxScore('')
+            }}
+            className="text-slate-600 hover:text-slate-900"
+          >
+            Clear All Filters
+          </Button>
+        </div>
         
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="input-premium"
-        >
-          <option value="">All Categories</option>
-          {categories.map(category => (
-            <option key={category} value={category}>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </option>
-          ))}
-        </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Student Name Filter */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Student Name
+            </label>
+            <SearchBar
+              placeholder="Search by student name..."
+              onSearch={setSearchTerm}
+              className="w-full"
+            />
+          </div>
+          
+          {/* Category Filter */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Assignment Category
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="input-premium"
+            >
+              <option value="">All Categories</option>
+              {categories.map(category => (
+                <option key={category} value={category}>
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          {/* Student Marks Range Filter */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Score Range (%)
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="number"
+                placeholder="Min %"
+                value={minScore}
+                onChange={(e) => setMinScore(e.target.value)}
+                className="input-premium flex-1"
+                min="0"
+                max="100"
+              />
+              <input
+                type="number"
+                placeholder="Max %"
+                value={maxScore}
+                onChange={(e) => setMaxScore(e.target.value)}
+                className="input-premium flex-1"
+                min="0"
+                max="100"
+              />
+            </div>
+          </div>
+        </div>
         
-        <input
-          type="text"
-          placeholder="Filter by assignment name..."
-          value={assignmentNameFilter}
-          onChange={(e) => setAssignmentNameFilter(e.target.value)}
-          className="input-premium"
-        />
-        
-        <div className="flex gap-2">
+        {/* Additional Assignment Name Filter */}
+        <div className="mt-4 space-y-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Assignment Name
+          </label>
           <input
-            type="number"
-            placeholder="Min %"
-            value={minScore}
-            onChange={(e) => setMinScore(e.target.value)}
-            className="input-premium"
-            min="0"
-            max="100"
-          />
-          <input
-            type="number"
-            placeholder="Max %"
-            value={maxScore}
-            onChange={(e) => setMaxScore(e.target.value)}
-            className="input-premium"
-            min="0"
-            max="100"
+            type="text"
+            placeholder="Filter by assignment name..."
+            value={assignmentNameFilter}
+            onChange={(e) => setAssignmentNameFilter(e.target.value)}
+            className="input-premium w-full md:w-1/2"
           />
         </div>
       </div>
@@ -391,7 +436,7 @@ const getStudentName = (studentId) => {
           <p className="text-slate-500">
             Try adjusting your search terms or{' '}
             <button
-              onClick={() => {
+onClick={() => {
                 setSearchTerm('')
                 setSelectedCategory('')
                 setAssignmentNameFilter('')
