@@ -77,7 +77,7 @@ const Dashboard = () => {
     const recentGrades = grades
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 5)
-      .map(grade => {
+.map(grade => {
         const student = students.find(s => s.Id === parseInt(grade.studentId))
         return {
           ...grade,

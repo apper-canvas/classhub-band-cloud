@@ -107,9 +107,9 @@ const GradeForm = ({
     { value: 'homework', label: 'Homework' },
     { value: 'quiz', label: 'Quiz' },
     { value: 'test', label: 'Test' },
-    { value: 'project', label: 'Project' },
+{ value: 'project', label: 'Project' },
     { value: 'participation', label: 'Participation' },
-    { value: 'extra_credit', label: 'Extra Credit' }
+    { value: 'final', label: 'Final' }
   ]
   
   const percentage = formData.score && formData.maxScore 

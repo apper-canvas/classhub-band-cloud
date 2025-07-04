@@ -165,7 +165,37 @@ const StudentForm = ({
               onChange={handleChange}
               error={errors.status}
               options={statusOptions}
-              required
+required
+            />
+            
+            <div className="md:col-span-2">
+              <h3 className="text-lg font-semibold text-slate-800 mb-4">Parent Information</h3>
+            </div>
+            
+            <FormField
+              label="Parent Name"
+              name="parentName"
+              value={formData.parentName}
+              onChange={handleChange}
+              placeholder="Enter parent's full name"
+            />
+            
+            <FormField
+              type="email"
+              label="Parent Email"
+              name="parentEmail"
+              value={formData.parentEmail}
+              onChange={handleChange}
+              placeholder="parent@example.com"
+            />
+            
+            <FormField
+              type="tel"
+              label="Parent Phone"
+              name="parentPhone"
+              value={formData.parentPhone}
+              onChange={handleChange}
+              placeholder="(555) 123-4567"
             />
           </div>
           

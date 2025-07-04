@@ -110,7 +110,7 @@ const StudentTable = ({
                 <td className="px-6 py-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center text-white font-medium">
-                      {student.name?.charAt(0)?.toUpperCase()}
+{student.name?.charAt(0)?.toUpperCase()}
                     </div>
                     <div>
                       <div className="font-medium text-slate-900">{student.name}</div>
